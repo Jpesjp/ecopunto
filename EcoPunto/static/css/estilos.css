@@ -1,0 +1,17 @@
+/* EcoPunto - Hoja de estilos institucional
+   Cumple pautas WCAG 2.1 nivel AA para contraste de color */
+:root {
+  --verde-umb: #2E7D32;
+  --verde-oscuro: #1B5E20;
+  --verde-claro: #E8F5E9;
+}
+body { background-color: #F7F9F7; font-family: "Segoe UI", system-ui, sans-serif; }
+.bg-verde { background-color: var(--verde-umb) !important; }
+.text-verde { color: var(--verde-umb) !important; }
+.btn-verde { background-color: var(--verde-umb); color: #fff; border: none; }
+.btn-verde:hover, .btn-verde:focus { background-color: var(--verde-oscuro); color: #fff; }
+.card { border: 1px solid #E0E6E0; border-radius: .6rem; }
+.kpi { background: linear-gradient(135deg, var(--verde-claro), #fff); }
+.kpi-valor { font-size: 1.9rem; font-weight: 700; color: var(--verde-oscuro); margin: 0; }
+.kpi-texto { font-size: .8rem; text-transform: uppercase; color: #5A6B5A; margin: 0; letter-spacing: .03em; }
+footer { background: #fff; }

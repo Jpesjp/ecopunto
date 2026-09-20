@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block titulo %}Reportes{% endblock %}
+{% block contenido %}
+<h1 class="h3 mb-4">Reportes de impacto ambiental</h1>
+<div class="card mb-4"><div class="card-body">
+  <form method="post" class="row g-3 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label" for="fecha_inicio">Fecha inicial</label>
+      <input class="form-control" type="date" id="fecha_inicio" name="fecha_inicio" required max="{{ hoy }}">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label" for="fecha_fin">Fecha final</label>
+      <input class="form-control" type="date" id="fecha_fin" name="fecha_fin" required max="{{ hoy }}">
+    </div>
+    <div class="col-md-4"><button class="btn btn-verde w-100">Generar reporte</button></div>
+  </form>
+  {% if resumen %}
+  <div class="alert alert-success mt-3 mb-0">
+    Total aprovechado: <strong>{{ resumen.total_kg }} kg</strong> &middot;
+    CO2 evitado: <strong>{{ resumen.co2_evitado }} kg</strong>
+  </div>
+  {% endif %}
+</div></div>
+
+<div class="card"><div class="table-responsive">
+<table class="table align-middle mb-0">
+  <thead class="table-light"><tr><th>#</th><th>Usuario</th><th>Periodo</th><th class="text-end">Total (kg)</th>
+    <th class="text-end">CO2 evitado (kg)</th><th>Generado</th></tr></thead>
+  <tbody>
+  {% for rep in reportes %}
+    <tr><td class="text-muted">{{ rep.id_reporte }}</td><td class="small">{{ rep.usuario }}</td>
+        <td class="small">{{ rep.fecha_inicio }} a {{ rep.fecha_fin }}</td>
+        <td class="text-end fw-semibold">{{ rep.total_kg }}</td>
+        <td class="text-end text-success">{{ rep.co2_evitado }}</td>
+        <td class="small">{{ rep.fecha_generacion[:16] }}</td></tr>
+  {% else %}
+    <tr><td colspan="6" class="text-center text-muted py-4">No hay reportes generados.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div></div>
+{% endblock %}

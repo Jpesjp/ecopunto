@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block titulo %}{{ accion }} punto{% endblock %}
+{% block contenido %}
+<h1 class="h3 mb-4">{{ accion }} punto de reciclaje</h1>
+<div class="card"><div class="card-body">
+<form method="post" novalidate>
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label" for="nombre">Nombre del punto *</label>
+      <input class="form-control" id="nombre" name="nombre" required maxlength="100"
+             value="{{ punto.nombre if punto else '' }}">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label" for="direccion">Direccion *</label>
+      <input class="form-control" id="direccion" name="direccion" required maxlength="150"
+             value="{{ punto.direccion if punto else '' }}">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label" for="localidad">Localidad *</label>
+      <select class="form-select" id="localidad" name="localidad" required>
+        <option value="">Seleccione...</option>
+        {% for loc in localidades %}
+          <option value="{{ loc }}" {% if punto and punto.localidad == loc %}selected{% endif %}>{{ loc }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-4">
+      <label class="form-label" for="latitud">Latitud</label>
+      <input class="form-control" id="latitud" name="latitud" type="number" step="0.000001"
+             value="{{ punto.latitud if punto and punto.latitud is not none else '' }}">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label" for="longitud">Longitud</label>
+      <input class="form-control" id="longitud" name="longitud" type="number" step="0.000001"
+             value="{{ punto.longitud if punto and punto.longitud is not none else '' }}">
+    </div>
+    <div class="col-md-8">
+      <label class="form-label" for="horario">Horario de atencion</label>
+      <input class="form-control" id="horario" name="horario" maxlength="80"
+             value="{{ punto.horario if punto else '' }}">
+    </div>
+    <div class="col-md-4">
+      <label class="form-label" for="estado">Estado *</label>
+      <select class="form-select" id="estado" name="estado" required>
+        {% for est in estados %}
+          <option value="{{ est }}" {% if punto and punto.estado == est %}selected{% endif %}>{{ est|capitalize }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <hr>
+  <button class="btn btn-verde" type="submit">{{ accion }}</button>
+  <a class="btn btn-link" href="{{ url_for('listar_puntos') }}">Cancelar</a>
+</form>
+</div></div>
+{% endblock %}

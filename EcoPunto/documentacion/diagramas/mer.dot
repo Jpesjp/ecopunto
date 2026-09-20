@@ -1,0 +1,82 @@
+digraph MER {
+  graph [rankdir=LR, splines=spline, nodesep=0.6, ranksep=1.5, fontname="Helvetica", bgcolor="white", label="Modelo Entidad - Relación (MER) - EcoPunto", labelloc=t, fontsize=20];
+  node [shape=plaintext, fontname="Helvetica", fontsize=10];
+  edge [fontname="Helvetica-Bold", fontsize=11, color="#37474F", penwidth=1.4, arrowhead=none];
+
+  usuario [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+    <TR><TD BGCOLOR="#2E7D32" COLSPAN="2"><FONT COLOR="white"><B>USUARIO</B></FONT></TD></TR>
+    <TR><TD BGCOLOR="#E8F5E9" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT" BGCOLOR="#E8F5E9"><B>id_usuario</B> : INTEGER</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">nombre : VARCHAR(100)</TD></TR>
+    <TR><TD ALIGN="LEFT"><B>UQ</B></TD><TD ALIGN="LEFT">correo : VARCHAR(120)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">contrasena_hash : VARCHAR(200)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">rol : VARCHAR(20)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">fecha_registro : DATETIME</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">activo : INTEGER</TD></TR>
+    </TABLE>>];
+
+  punto [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+    <TR><TD BGCOLOR="#2E7D32" COLSPAN="2"><FONT COLOR="white"><B>PUNTO_RECICLAJE</B></FONT></TD></TR>
+    <TR><TD BGCOLOR="#E8F5E9" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT" BGCOLOR="#E8F5E9"><B>id_punto</B> : INTEGER</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">nombre : VARCHAR(100)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">direccion : VARCHAR(150)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">localidad : VARCHAR(60)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">latitud : DECIMAL(9,6)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">longitud : DECIMAL(9,6)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">horario : VARCHAR(80)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">estado : VARCHAR(20)</TD></TR>
+    </TABLE>>];
+
+  tipo [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+    <TR><TD BGCOLOR="#2E7D32" COLSPAN="2"><FONT COLOR="white"><B>TIPO_RESIDUO</B></FONT></TD></TR>
+    <TR><TD BGCOLOR="#E8F5E9" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT" BGCOLOR="#E8F5E9"><B>id_tipo</B> : INTEGER</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">nombre : VARCHAR(60)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">categoria : VARCHAR(40)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">unidad_medida : VARCHAR(10)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">factor_co2 : DECIMAL(6,3)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">activo : INTEGER</TD></TR>
+    </TABLE>>];
+
+  registro [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+    <TR><TD BGCOLOR="#1B5E20" COLSPAN="2"><FONT COLOR="white"><B>REGISTRO_RESIDUO</B></FONT></TD></TR>
+    <TR><TD BGCOLOR="#E8F5E9" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT" BGCOLOR="#E8F5E9"><B>id_registro</B> : INTEGER</TD></TR>
+    <TR><TD BGCOLOR="#FFF8E1" ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT" BGCOLOR="#FFF8E1"><I>id_usuario</I> : INTEGER</TD></TR>
+    <TR><TD BGCOLOR="#FFF8E1" ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT" BGCOLOR="#FFF8E1"><I>id_punto</I> : INTEGER</TD></TR>
+    <TR><TD BGCOLOR="#FFF8E1" ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT" BGCOLOR="#FFF8E1"><I>id_tipo</I> : INTEGER</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">cantidad : DECIMAL(8,2)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">fecha_registro : DATETIME</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">observaciones : VARCHAR(250)</TD></TR>
+    </TABLE>>];
+
+  reporte [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+    <TR><TD BGCOLOR="#2E7D32" COLSPAN="2"><FONT COLOR="white"><B>REPORTE_AMBIENTAL</B></FONT></TD></TR>
+    <TR><TD BGCOLOR="#E8F5E9" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT" BGCOLOR="#E8F5E9"><B>id_reporte</B> : INTEGER</TD></TR>
+    <TR><TD BGCOLOR="#FFF8E1" ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT" BGCOLOR="#FFF8E1"><I>id_usuario</I> : INTEGER</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">fecha_generacion : DATETIME</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">fecha_inicio : DATE</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">fecha_fin : DATE</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">total_kg : DECIMAL(10,2)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">co2_evitado : DECIMAL(10,2)</TD></TR>
+    </TABLE>>];
+
+  campania [label=<
+    <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5">
+    <TR><TD BGCOLOR="#2E7D32" COLSPAN="2"><FONT COLOR="white"><B>CAMPANIA</B></FONT></TD></TR>
+    <TR><TD BGCOLOR="#E8F5E9" ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT" BGCOLOR="#E8F5E9"><B>id_campania</B> : INTEGER</TD></TR>
+    <TR><TD BGCOLOR="#FFF8E1" ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT" BGCOLOR="#FFF8E1"><I>id_punto</I> : INTEGER</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">nombre : VARCHAR(100)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">descripcion : VARCHAR(250)</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">fecha_inicio : DATE</TD></TR>
+    <TR><TD ALIGN="LEFT"></TD><TD ALIGN="LEFT">fecha_fin : DATE</TD></TR>
+    </TABLE>>];
+
+  usuario  -> registro [taillabel="1  ", headlabel="  0..N", label="realiza"];
+  punto    -> registro [taillabel="1  ", headlabel="  0..N", label="recibe"];
+  tipo     -> registro [taillabel="1  ", headlabel="  0..N", label="clasifica"];
+  usuario  -> reporte  [taillabel="1  ", headlabel="  0..N", label="genera"];
+  punto    -> campania [taillabel="1  ", headlabel="  0..N", label="aloja"];
+}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titulo %}Tablero{% endblock %}
+{% block contenido %}
+<h1 class="h3 mb-4">Tablero de indicadores ambientales</h1>
+<div class="row g-3 mb-4">
+  <div class="col-6 col-lg-3"><div class="card kpi"><div class="card-body">
+    <p class="kpi-valor">{{ indicadores.total_kg }}</p><p class="kpi-texto">Kilogramos reciclados</p></div></div></div>
+  <div class="col-6 col-lg-3"><div class="card kpi"><div class="card-body">
+    <p class="kpi-valor">{{ indicadores.co2_evitado }}</p><p class="kpi-texto">Kg de CO2 evitado</p></div></div></div>
+  <div class="col-6 col-lg-3"><div class="card kpi"><div class="card-body">
+    <p class="kpi-valor">{{ indicadores.total_registros }}</p><p class="kpi-texto">Registros realizados</p></div></div></div>
+  <div class="col-6 col-lg-3"><div class="card kpi"><div class="card-body">
+    <p class="kpi-valor">{{ indicadores.participantes }}</p><p class="kpi-texto">Ciudadanos participantes</p></div></div></div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="card h-100"><div class="card-body">
+      <h2 class="h6 text-uppercase text-muted mb-3">Aprovechamiento por localidad</h2>
+      <table class="table table-sm align-middle mb-0">
+        <thead><tr><th>Localidad</th><th class="text-end">Total (kg)</th><th class="text-end">CO2 evitado</th></tr></thead>
+        <tbody>
+        {% for fila in por_localidad %}
+          <tr><td>{{ fila.localidad }}</td><td class="text-end">{{ fila.total_kg }}</td><td class="text-end">{{ fila.co2_evitado }}</td></tr>
+        {% else %}
+          <tr><td colspan="3" class="text-muted">Sin informacion registrada.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div></div>
+  </div>
+  <div class="col-lg-6">
+    <div class="card h-100"><div class="card-body">
+      <h2 class="h6 text-uppercase text-muted mb-3">Aprovechamiento por tipo de residuo</h2>
+      <table class="table table-sm align-middle mb-0">
+        <thead><tr><th>Tipo</th><th>Categoria</th><th class="text-end">Total (kg)</th></tr></thead>
+        <tbody>
+        {% for fila in por_tipo %}
+          <tr><td>{{ fila.tipo }}</td><td><span class="badge bg-secondary">{{ fila.categoria }}</span></td><td class="text-end">{{ fila.total_kg }}</td></tr>
+        {% else %}
+          <tr><td colspan="3" class="text-muted">Sin informacion registrada.</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div></div>
+  </div>
+</div>
+{% endblock %}

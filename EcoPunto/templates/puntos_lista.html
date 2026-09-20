@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block titulo %}Puntos de reciclaje{% endblock %}
+{% block contenido %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h1 class="h3 mb-0">Puntos de reciclaje</h1>
+  {% if session.rol == 'administrador' %}
+    <a class="btn btn-verde" href="{{ url_for('crear_punto') }}">+ Nuevo punto</a>
+  {% endif %}
+</div>
+
+<form class="row g-2 mb-3" method="get">
+  <div class="col-md-4">
+    <input class="form-control" type="search" name="q" value="{{ busqueda }}" placeholder="Buscar por localidad...">
+  </div>
+  <div class="col-auto"><button class="btn btn-outline-secondary">Buscar</button></div>
+  {% if busqueda %}<div class="col-auto"><a class="btn btn-link" href="{{ url_for('listar_puntos') }}">Limpiar</a></div>{% endif %}
+</form>
+
+<div class="card"><div class="table-responsive">
+<table class="table table-hover align-middle mb-0">
+  <thead class="table-light">
+    <tr><th>#</th><th>Nombre</th><th>Direccion</th><th>Localidad</th><th>Horario</th><th>Estado</th>
+    {% if session.rol == 'administrador' %}<th class="text-end">Acciones</th>{% endif %}</tr>
+  </thead>
+  <tbody>
+  {% for punto in puntos %}
+    <tr>
+      <td class="text-muted">{{ punto.id_punto }}</td>
+      <td class="fw-semibold">{{ punto.nombre }}</td>
+      <td class="small">{{ punto.direccion }}</td>
+      <td>{{ punto.localidad }}</td>
+      <td class="small">{{ punto.horario }}</td>
+      <td>
+        {% if punto.estado == 'activo' %}<span class="badge bg-success">Activo</span>
+        {% elif punto.estado == 'mantenimiento' %}<span class="badge bg-warning text-dark">Mantenimiento</span>
+        {% else %}<span class="badge bg-secondary">Inactivo</span>{% endif %}
+      </td>
+      {% if session.rol == 'administrador' %}
+      <td class="text-end text-nowrap">
+        <a class="btn btn-sm btn-outline-primary" href="{{ url_for('editar_punto', id_punto=punto.id_punto) }}">Editar</a>
+        <form class="d-inline" method="post" action="{{ url_for('eliminar_punto', id_punto=punto.id_punto) }}"
+              onsubmit="return confirm('Confirma eliminar el punto {{ punto.nombre }}?');">
+          <button class="btn btn-sm btn-outline-danger">Eliminar</button>
+        </form>
+      </td>
+      {% endif %}
+    </tr>
+  {% else %}
+    <tr><td colspan="7" class="text-center text-muted py-4">No se encontraron puntos de reciclaje.</td></tr>
+  {% endfor %}
+  </tbody>
+</table>
+</div></div>
+{% endblock %}

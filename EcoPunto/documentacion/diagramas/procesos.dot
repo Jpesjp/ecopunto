@@ -1,0 +1,47 @@
+digraph Procesos {
+  graph [rankdir=TB, splines=spline, nodesep=0.5, ranksep=0.45, fontname="Helvetica", bgcolor="white",
+         label="Diagrama de Procesos - Registro de residuos reciclables y generación del reporte ambiental", labelloc=t, fontsize=16];
+  node [fontname="Helvetica", fontsize=10, shape=box, style="rounded,filled", fillcolor="#C8E6C9", color="#2E7D32", penwidth=1.5, width=2.6, height=0.62, fixedsize=true];
+  edge [fontname="Helvetica-Bold", fontsize=9, color="#455A64", penwidth=1.4];
+
+  ini [label="Inicio", shape=circle, width=0.6, height=0.6, fillcolor="#2E7D32", fontcolor="white", color="#1B5E20"];
+  c1  [label="Iniciar sesión en la plataforma"];
+  s1  [label="Validar credenciales (USUARIO)", fillcolor="#BBDEFB", color="#1565C0"];
+  d0  [label="¿Credenciales\ncorrectas?", shape=diamond, width=1.9, height=1.15, fillcolor="#FFF59D", color="#F9A825"];
+  e0  [label="Mostrar mensaje de error", fillcolor="#FFCDD2", color="#C62828"];
+  s2  [label="GET /api/v1/puntos (puntos activos)", fillcolor="#BBDEFB", color="#1565C0", width=3.0];
+  c2  [label="Seleccionar punto de reciclaje"];
+  c3  [label="Diligenciar tipo de residuo y cantidad", width=3.0];
+  d1  [label="¿Datos\nválidos?", shape=diamond, width=1.9, height=1.15, fillcolor="#FFF59D", color="#F9A825"];
+  c4  [label="Corregir datos del formulario"];
+  s3  [label="INSERT en REGISTRO_RESIDUO", fillcolor="#BBDEFB", color="#1565C0"];
+  a1  [label="Auditar y validar registros", fillcolor="#FFE0B2", color="#EF6C00"];
+  s4  [label="Calcular total_kg y co2_evitado", fillcolor="#BBDEFB", color="#1565C0"];
+  s5  [label="Persistir REPORTE_AMBIENTAL", fillcolor="#BBDEFB", color="#1565C0"];
+  c5  [label="Consultar reporte de impacto"];
+  fin [label="Fin", shape=doublecircle, width=0.55, height=0.55, fillcolor="#1B5E20", fontcolor="white", color="#1B5E20"];
+
+  ini -> c1 -> s1 -> d0;
+  d0 -> e0 [label="  No"];
+  e0 -> c1 [constraint=false];
+  d0 -> s2 [label="  Sí"];
+  s2 -> c2 -> c3 -> d1;
+  d1 -> c4 [label="  No"];
+  c4 -> c3 [constraint=false];
+  d1 -> s3 [label="  Sí"];
+  s3 -> s4 -> s5 -> c5 -> fin;
+  s3 -> a1 [style=dashed, label="  notifica"];
+  { rank=same; s4; a1; }
+  a1 -> s5 [style=dashed, constraint=false];
+
+  subgraph cluster_leyenda {
+    label="Convenciones"; fontsize=12; fontname="Helvetica-Bold"; color="#90A4AE"; style="rounded"; margin=10;
+    node [width=2.3, height=0.45, fontsize=9];
+    l1 [label="Actividad del Ciudadano", fillcolor="#C8E6C9", color="#2E7D32"];
+    l2 [label="Proceso automático del Sistema", fillcolor="#BBDEFB", color="#1565C0"];
+    l3 [label="Actividad del Administrador", fillcolor="#FFE0B2", color="#EF6C00"];
+    l4 [label="Punto de decisión", fillcolor="#FFF59D", color="#F9A825"];
+    l1 -> l2 -> l3 -> l4 [style=invis];
+  }
+  fin -> l1 [style=invis];
+}
