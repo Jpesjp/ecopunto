@@ -6,6 +6,9 @@ Plataforma web para la gestión y trazabilidad de residuos reciclables en comuni
 Asignaturas: Estándares y Métricas de Software / Ingeniería Web
 Evento **PLANETA VERDE 2026**
 
+**Autores:** David Santiago Cárdenas Perilla, Juan Pablo Rojas Fernández,
+Nicolás Betancourt Rodríguez y Juan Diego Fajardo Suárez.
+
 ---
 
 ## 1. Requisitos
@@ -50,7 +53,17 @@ Abrir el navegador en: **http://127.0.0.1:5000**
 python test_ecopunto.py
 ```
 
-Ejecuta 20 pruebas sobre los dos CRUD, las validaciones, el cálculo de CO₂ y la API REST.
+Ejecuta las 20 verificaciones originales (CRUD, validaciones, CO₂ y API REST).
+
+### Suite automatizada con pytest (Guía 7)
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest                                   # 80 casos
+python -m pytest --cov=app --cov=database --cov-report=term-missing
+```
+
+Cada prueba usa una base de datos SQLite temporal: `ecopunto.db` no se modifica.
 
 ## 5. Estructura del proyecto
 
