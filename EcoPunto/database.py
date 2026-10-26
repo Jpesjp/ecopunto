@@ -192,6 +192,12 @@ def listar_tipos(solo_activos=True):
     return consultar(sql + " ORDER BY nombre")
 
 
+def obtener_tipo(id_tipo):
+    return consultar(
+        "SELECT * FROM tipo_residuo WHERE id_tipo = ? AND activo = 1", (id_tipo,), uno=True
+    )
+
+
 def obtener_usuario_por_correo(correo):
     return consultar("SELECT * FROM usuario WHERE correo = ?", (correo,), uno=True)
 

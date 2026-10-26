@@ -14,6 +14,7 @@ Ejecucion:
     Navegador: http://127.0.0.1:5000
 """
 
+import math
 from datetime import date, datetime
 from functools import wraps
 
@@ -80,13 +81,19 @@ def validar_punto(formulario):
 def validar_registro(formulario):
     """Validacion de reglas de negocio del formulario de registros."""
     errores = []
-    if not formulario.get("id_punto"):
+    id_punto = formulario.get("id_punto", "")
+    id_tipo = formulario.get("id_tipo", "")
+    # DEF-002: el punto y el tipo deben existir; un id inexistente generaba error 500
+    if not id_punto.isdigit() or bd.obtener_punto(int(id_punto)) is None:
         errores.append("Debe seleccionar un punto de reciclaje.")
-    if not formulario.get("id_tipo"):
+    if not id_tipo.isdigit() or bd.obtener_tipo(int(id_tipo)) is None:
         errores.append("Debe seleccionar un tipo de residuo.")
     try:
         cantidad = float(formulario.get("cantidad", ""))
-        if cantidad <= 0:
+        if not math.isfinite(cantidad):
+            # DEF-001: float("nan") superaba las validaciones y fallaba en la BD
+            errores.append("La cantidad debe ser un valor numerico.")
+        elif cantidad <= 0:
             errores.append("La cantidad debe ser mayor que cero.")
         elif cantidad > 1000:
             errores.append("La cantidad maxima por registro es de 1000 kg.")
@@ -325,7 +332,7 @@ def eliminar_registro(id_registro):
 
 
 # ======================================================================
-# Reportes ambientales  (RF4)
+# Reportes ambientales  (RF5)
 # ======================================================================
 
 @app.route("/reportes", methods=["GET", "POST"])
@@ -356,7 +363,7 @@ def reportes():
 
 
 # ======================================================================
-# API REST  (RF5) - Ingenieria Web: servicios JSON sin estado
+# API REST  (RF7) - Ingenieria Web: servicios JSON sin estado
 # ======================================================================
 
 @app.route("/api/v1/puntos", methods=["GET"])

@@ -1,0 +1,7 @@
+# Archivos generados por la aplicación o por las pruebas
+ecopunto.db
+__pycache__/
+.pytest_cache/
+.coverage
+htmlcov/
+venv/

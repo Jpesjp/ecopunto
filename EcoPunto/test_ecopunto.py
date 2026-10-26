@@ -104,12 +104,12 @@ def main():
     verificar("DELETE: elimina el registro",
               bd.obtener_registro(ultimo["id_registro"]) is None)
 
-    encabezado("PRUEBA 5 - Reporte ambiental y calculo de CO2 (RF4)")
+    encabezado("PRUEBA 5 - Calculo de CO2 y reporte ambiental (RF4 y RF5)")
     _, resumen = bd.generar_reporte(2, "2026-08-01", "2026-09-30")
     verificar("Calcula el total de kilogramos del periodo", resumen["total_kg"] > 0)
     verificar("Calcula el CO2 evitado del periodo", resumen["co2_evitado"] > 0)
 
-    encabezado("PRUEBA 6 - API REST (RF5)")
+    encabezado("PRUEBA 6 - API REST e indicadores (RF6, RF7 y RF11)")
     respuesta = cliente.get("/api/v1/puntos")
     datos = respuesta.get_json()
     verificar("GET /api/v1/puntos responde 200", respuesta.status_code == 200)

@@ -1,6 +1,6 @@
 -- ============================================================
 -- EcoPunto - Datos de prueba (seed)
--- Las contrasenas se insertan desde database.py con hash PBKDF2
+-- Las contrasenas se insertan desde database.py con hash scrypt (Werkzeug 3)
 -- ============================================================
 
 INSERT INTO punto_reciclaje (nombre, direccion, localidad, latitud, longitud, horario, estado) VALUES
@@ -34,5 +34,5 @@ INSERT INTO campania (id_punto, nombre, descripcion, fecha_inicio, fecha_fin) VA
 (3, 'Kennedy Recicla', 'Campana de sensibilizacion y acopio de metales', '2026-10-12', '2026-10-20');
 
 INSERT INTO reporte_ambiental (id_usuario, fecha_generacion, fecha_inicio, fecha_fin, total_kg, co2_evitado) VALUES
-(2, '2026-09-01 08:00:00', '2026-08-01', '2026-08-31', 35.70, 51.51),
-(3, '2026-09-01 08:05:00', '2026-08-01', '2026-08-31', 26.20, 63.42);
+(2, '2026-09-01 08:00:00', '2026-08-01', '2026-08-31', 35.70, 42.83),
+(3, '2026-09-01 08:05:00', '2026-08-01', '2026-08-31', 26.20, 63.39);
